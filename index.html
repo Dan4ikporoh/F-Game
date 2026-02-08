@@ -3,71 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>FRIDE Jump Toon</title>
+    <title>FRIDE NEON</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Экран загрузки -->
     <div id="loader">
-        <div id="stickers-bg"></div> <!-- Сюда будут падать стикеры -->
-        <div class="f-logo-toon">F</div>
-        <div class="progress-bar">
-            <div id="progress-fill"></div>
-        </div>
-        <div class="loader-text">ЗАГРУЗКА...</div>
+        <div class="f-logo-brutal">F</div>
+        <div class="progress-bar"><div id="progress-fill"></div></div>
+        <div style="margin-top:10px; color:#555">SYSTEM LOADING...</div>
     </div>
 
-    <!-- Игра -->
     <div id="game-ui" class="hidden">
         <canvas id="gameCanvas"></canvas>
-        <!-- Солнце и облака -->
-        <div class="sun"></div>
-        <div class="cloud c1">☁</div>
-        <div class="cloud c2">☁</div>
-
         <div class="hud">
             <div class="stats">
-                <div>🍼 <span id="bottles">0</span></div>
-                <div>💰 <span id="money">0</span></div>
-                <div style="color:#ffae00; font-size:10px">🏆 <span id="record">0</span>м</div>
+                <div>🧪 <span id="bottles">0</span></div>
+                <div>💳 <span id="money">0</span></div>
+                <div style="color:#ff0055">TOP: <span id="record">0</span></div>
             </div>
-            <button id="pause-btn" class="btn-toon">II</button>
+            <button id="pause-btn" class="btn-neon">II</button>
         </div>
-        <div id="steps-counter">0 м</div>
+        <div id="steps-counter" style="position:absolute; top:50px; width:100%; text-align:center; font-size:24px; text-shadow:0 0 10px #fff;">0</div>
     </div>
 
-    <!-- Модальные окна -->
     <div id="pause-modal" class="modal hidden">
         <div class="modal-content">
-            <h1>ПАУЗА</h1>
-            <button id="resume-btn" class="btn-toon">ПРОДОЛЖИТЬ</button>
-            <button id="pause-exit-btn" class="btn-toon red">ВЫЙТИ И СОХРАНИТЬ</button>
+            <h1>PAUSED</h1>
+            <button id="resume-btn" class="btn-neon">RESUME</button>
+            <button id="pause-exit-btn" class="btn-neon red">SAVE & EXIT</button>
         </div>
     </div>
 
     <div id="game-over" class="modal hidden">
         <div class="modal-content">
-            <h1 style="color:#ff4444">УПАЛ!</h1>
-            <p>Высота: <span id="final-steps">0</span> м</p>
-            <button id="restart-btn" class="btn-toon">ЕЩЕ РАЗ</button>
-            <button id="exit-btn" class="btn-toon red">ВЫЙТИ И СОХРАНИТЬ</button>
+            <h1>WASTED</h1>
+            <p>HEIGHT: <span id="final-steps">0</span></p>
+            <button id="restart-btn" class="btn-neon">RETRY</button> <!-- При нажатии сохраняет -->
+            <button id="exit-btn" class="btn-neon red">EXIT</button>
         </div>
     </div>
 
     <div id="withdraw-modal" class="modal hidden">
         <div class="modal-content">
-            <h2>ВЫВОД</h2>
-            <input type="text" id="in-name" placeholder="Никнейм">
-            <input type="number" id="in-amount" placeholder="Сумма (от 150к)">
-            <button id="confirm-draw" class="btn-toon">ОТПРАВИТЬ</button>
-            <button id="close-draw" class="btn-toon red">ОТМЕНА</button>
+            <h2>CASHOUT</h2>
+            <input type="text" id="in-name" placeholder="NICKNAME">
+            <input type="number" id="in-amount" placeholder="AMOUNT (MIN 150K)">
+            <button id="confirm-draw" class="btn-neon">SEND</button>
+            <button id="close-draw" class="btn-neon red">CANCEL</button>
         </div>
     </div>
 
-    <!-- Кнопки внизу -->
     <div class="footer-btns">
-        <button id="open-draw" class="btn-toon">ВЫВОД</button>
-        <button id="support-btn" class="btn-toon">СВЯЗЬ</button>
+        <button id="open-draw" class="btn-neon">CASHOUT</button>
+        <button id="support-btn" class="btn-neon">SUPPORT</button>
     </div>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
