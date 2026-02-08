@@ -12,21 +12,18 @@ let bottles = parseInt(params.get('bottles')) || 0;
 let highScore = parseInt(params.get('record')) || 0;
 let currentMeters = 0;
 
-let platforms = [], starArray = [], bottleArray = [], isPaused = false, isOver = false;
+let platforms = [], bottleArray = [], isPaused = false, isOver = false;
 const player = { x: canvas.width/2, y: canvas.height-200, w: 40, h: 40, dy: -10, jump: -12, grav: 0.45 };
 
 function init() {
-    // Звездное небо
-    for(let i=0; i<50; i++) {
-        starArray.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, s: Math.random()*2 });
-    }
+    // Генерация звезд в CSS, здесь только платформы
     platforms = [{ x: canvas.width/2-40, y: canvas.height-100, w: 80, h: 15 }];
     for(let i=1; i<8; i++) spawnPlat(canvas.height - i*130);
     
-    // Эмуляция загрузки
+    // Загрузка
     let progress = 0;
     const interval = setInterval(() => {
-        progress += 5;
+        progress += 10;
         document.getElementById('progress-fill').style.width = progress + "%";
         if(progress >= 100) {
             clearInterval(interval);
@@ -34,7 +31,7 @@ function init() {
             document.getElementById('game-ui').classList.remove('hidden');
             animate();
         }
-    }, 50);
+    }, 100);
 }
 
 function spawnPlat(y) {
@@ -53,11 +50,11 @@ function update() {
     if(player.y < canvas.height/2) {
         let d = canvas.height/2 - player.y; player.y = canvas.height/2;
         currentMeters += Math.floor(d/10);
-        starArray.forEach(s => { s.y += d*0.2; if(s.y > canvas.height) s.y = 0; });
         platforms.forEach(p => { p.y += d; if(p.y > canvas.height) { platforms.splice(platforms.indexOf(p),1); spawnPlat(0); } });
         bottleArray.forEach(b => b.y += d);
     }
 
+    // Физика
     if(player.dy > 0) {
         platforms.forEach(p => { if(player.x+30 > p.x && player.x < p.x+p.w && player.y+40 > p.y && player.y+40 < p.y+p.h+10) player.dy = player.jump; });
     }
@@ -69,7 +66,8 @@ function update() {
         if(currentMeters > highScore) highScore = currentMeters;
         document.getElementById('game-over').classList.remove('hidden'); 
         document.getElementById('final-steps').innerText = currentMeters;
-        autoSave();
+        // Автосохранение при падении
+        saveData();
     }
     
     document.getElementById('steps-counter').innerText = currentMeters + " м";
@@ -83,14 +81,8 @@ function animate() {
     ctx.clearRect(0,0,canvas.width,canvas.height);
     update();
     
-    // Рисуем звезды
-    ctx.fillStyle = "white";
-    starArray.forEach(s => ctx.fillRect(s.x, s.y, s.s, s.s));
-
     ctx.fillStyle = "#ff8c00"; platforms.forEach(p => ctx.fillRect(p.x, p.y, p.w, p.h));
     ctx.fillStyle = "#fff"; bottleArray.forEach(b => ctx.fillText("🍼", b.x, b.y+20));
-    
-    // Персонаж
     ctx.fillStyle = "#ff8c00"; ctx.font = "900 45px Arial"; 
     ctx.shadowBlur = 15; ctx.shadowColor = "#ff4500";
     ctx.fillText("F", player.x, player.y+30);
@@ -99,7 +91,9 @@ function animate() {
     requestAnimationFrame(animate);
 }
 
-const autoSave = () => {
+// СОХРАНЕНИЕ ДАННЫХ
+const saveData = () => {
+    // ВАЖНО: Отправляем новые, накопленные данные
     tg.sendData(JSON.stringify({
         action: "save",
         balance: balance,
@@ -108,20 +102,30 @@ const autoSave = () => {
     }));
 };
 
-document.getElementById('pause-exit-btn').onclick = () => { autoSave(); tg.close(); };
-document.getElementById('exit-btn').onclick = () => { autoSave(); tg.close(); };
+const exitAndSave = () => { saveData(); setTimeout(() => tg.close(), 100); };
+
+// КНОПКИ
+document.getElementById('pause-exit-btn').onclick = exitAndSave;
+document.getElementById('exit-btn').onclick = exitAndSave; // Кнопка в меню проигрыша
 document.getElementById('resume-btn').onclick = () => { isPaused = false; document.getElementById('pause-modal').classList.add('hidden'); animate(); };
 document.getElementById('pause-btn').onclick = () => { isPaused = true; document.getElementById('pause-modal').classList.remove('hidden'); };
 document.getElementById('restart-btn').onclick = () => location.reload();
+
+// ВЫВОД СРЕДСТВ
 document.getElementById('open-draw').onclick = () => document.getElementById('withdraw-modal').classList.remove('hidden');
 document.getElementById('close-draw').onclick = () => document.getElementById('withdraw-modal').classList.add('hidden');
-document.getElementById('support-btn').onclick = () => tg.openTelegramLink("https://t.me/твой_ник");
-
 document.getElementById('confirm-draw').onclick = () => {
     let n = document.getElementById('in-name').value, a = parseInt(document.getElementById('in-amount').value);
     if(a >= 150000 && a <= balance) {
         tg.sendData(JSON.stringify({action:"withdraw", char_name:n, amount:a}));
-        tg.close();
-    } else tg.showAlert("Минимум 150к и не больше баланса!");
+        setTimeout(() => tg.close(), 100);
+    } else tg.showAlert("Ошибка: минимум 150к или не хватает средств!");
 };
+
+// ПОДДЕРЖКА
+document.getElementById('support-btn').onclick = () => {
+    // Замени на свой ник без @
+    tg.openTelegramLink("https://t.me/Dead_Hard11"); 
+};
+
 init();
