@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Фон космоса -->
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>
+
     <div id="loader">
         <div class="f-logo-fire">F</div>
         <div class="progress-container"><div id="progress-fill"></div></div>
@@ -30,25 +35,25 @@
         <div class="modal-content">
             <h1>ПАУЗА</h1>
             <button id="resume-btn" class="btn-orange">ПРОДОЛЖИТЬ</button>
-            <button id="pause-exit-btn" class="btn-orange" style="background:#444">ВЫЙТИ</button>
+            <button id="pause-exit-btn" class="btn-orange" style="background:#444">ВЫЙТИ И СОХРАНИТЬ</button>
         </div>
     </div>
 
     <div id="game-over" class="modal hidden">
         <div class="modal-content">
             <h1 style="color:#ff4444">УПАЛ!</h1>
-            <p>РЕКОРД: <span id="final-steps">0</span> м</p>
+            <p>Счет: <span id="final-steps">0</span> м</p>
             <button id="restart-btn" class="btn-orange">ЕЩЕ РАЗ</button>
-            <button id="exit-btn" class="btn-orange" style="background:#444">ВЫЙТИ</button>
+            <button id="exit-btn" class="btn-orange" style="background:#444">ВЫЙТИ И СОХРАНИТЬ</button>
         </div>
     </div>
 
     <div id="withdraw-modal" class="modal hidden">
         <div class="modal-content">
-            <h2 style="color:#ff8c00">ВЫВОД СРЕДСТВ</h2>
-            <input type="text" id="in-name" placeholder="Ник персонажа">
-            <input type="number" id="in-amount" placeholder="Сумма (от 150 000)">
-            <button id="confirm-draw" class="btn-orange">ОТПРАВИТЬ ЗАЯВКУ</button>
+            <h2 style="color:#ff8c00">ВЫВОД</h2>
+            <input type="text" id="in-name" placeholder="Никнейм">
+            <input type="number" id="in-amount" placeholder="Сумма (мин 150к)">
+            <button id="confirm-draw" class="btn-orange">ОТПРАВИТЬ</button>
             <button id="close-draw" class="btn-orange" style="background:#333">ОТМЕНА</button>
         </div>
     </div>
