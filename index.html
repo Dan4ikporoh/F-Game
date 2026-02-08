@@ -10,7 +10,7 @@
     <div id="loader">
         <div class="f-logo-brutal">F</div>
         <div class="progress-bar"><div id="progress-fill"></div></div>
-        <div style="margin-top:10px; color:#555">SYSTEM LOADING...</div>
+        <div style="margin-top:10px; color:#ff0055">LOADING RESOURCES...</div>
     </div>
 
     <div id="game-ui" class="hidden">
@@ -18,7 +18,7 @@
         <div class="hud">
             <div class="stats">
                 <div>🧪 <span id="bottles">0</span></div>
-                <div>💳 <span id="money">0</span></div>
+                <div>💰 <span id="money">0</span></div>
                 <div style="color:#ff0055">TOP: <span id="record">0</span></div>
             </div>
             <button id="pause-btn" class="btn-neon">II</button>
@@ -26,6 +26,7 @@
         <div id="steps-counter" style="position:absolute; top:50px; width:100%; text-align:center; font-size:24px; text-shadow:0 0 10px #fff;">0</div>
     </div>
 
+    <!-- ОКНА -->
     <div id="pause-modal" class="modal hidden">
         <div class="modal-content">
             <h1>PAUSED</h1>
@@ -38,7 +39,7 @@
         <div class="modal-content">
             <h1>WASTED</h1>
             <p>HEIGHT: <span id="final-steps">0</span></p>
-            <button id="restart-btn" class="btn-neon">RETRY</button> <!-- При нажатии сохраняет -->
+            <button id="restart-btn" class="btn-neon">RETRY</button>
             <button id="exit-btn" class="btn-neon red">EXIT</button>
         </div>
     </div>
