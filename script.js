@@ -1,6 +1,71 @@
 const tg = window.Telegram.WebApp;
 tg.expand();
 
+// В начале script.js
+const urlParams = new URLSearchParams(window.location.search);
+// Берем баланс из ссылки или из памяти, если ссылки нет
+let totalBalance = parseInt(urlParams.get('balance')) || parseInt(localStorage.getItem('fride_bottles')) * 1000 || 0;
+
+// Обновляем отображение баланса в начале игры
+function updateUI() {
+    document.getElementById('bottles').innerText = Math.floor(totalBalance / 1000);
+    document.getElementById('money').innerText = totalBalance.toLocaleString();
+}
+
+// При сборе бутылки
+// (внутри функции сбора в update)
+if (player_collides_with_bottle) {
+    totalBalance += 1000; // +1000 рублей за бутылку
+    updateUI();
+}
+
+// ЛОГИКА ОКНА ВЫВОДА
+const withdrawModal = document.getElementById('withdraw-form-modal');
+
+document.getElementById('withdraw-btn').onclick = () => {
+    withdrawModal.classList.remove('hidden');
+};
+
+document.getElementById('close-withdraw-btn').onclick = () => {
+    withdrawModal.classList.add('hidden');
+};
+
+document.getElementById('confirm-withdraw-btn').onclick = () => {
+    const charName = document.getElementById('input-char-name').value;
+    const amount = parseInt(document.getElementById('input-amount').value);
+
+    if (!charName || !amount) {
+        tg.showAlert("Заполните все поля!");
+        return;
+    }
+
+    if (amount < 150000) {
+        tg.showAlert("Минимальная сумма вывода — 150 000 руб.!");
+        return;
+    }
+
+    if (amount > totalBalance) {
+        tg.showAlert("Недостаточно средств на балансе!");
+        return;
+    }
+
+    // ОТПРАВКА ДАННЫХ БОТУ
+    const data = {
+        action: "withdraw",
+        char_name: charName,
+        amount: amount
+    };
+    
+    tg.sendData(JSON.stringify(data)); // Бот получит это сообщение
+    
+    // Уменьшаем баланс в игре визуально
+    totalBalance -= amount;
+    updateUI();
+    withdrawModal.classList.add('hidden');
+    tg.close(); // Закрываем игру после вывода
+};
+
+
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
@@ -174,4 +239,5 @@ document.getElementById('withdraw-btn').onclick = () => {
 document.getElementById('support-btn').onclick = () => tg.openTelegramLink("https://t.me/Dead_Hard11");
 
 init();
+
 
