@@ -7,6 +7,7 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 const params = new URLSearchParams(window.location.search);
+// Читаем начальные данные
 let balance = parseInt(params.get('balance')) || 0;
 let bottles = parseInt(params.get('bottles')) || 0;
 let highScore = parseInt(params.get('record')) || 0;
@@ -16,11 +17,10 @@ let platforms = [], bottleArray = [], isPaused = false, isOver = false;
 const player = { x: canvas.width/2, y: canvas.height-200, w: 40, h: 40, dy: -10, jump: -12, grav: 0.45 };
 
 function init() {
-    // Генерация звезд в CSS, здесь только платформы
+    // Звезды созданы в CSS
     platforms = [{ x: canvas.width/2-40, y: canvas.height-100, w: 80, h: 15 }];
     for(let i=1; i<8; i++) spawnPlat(canvas.height - i*130);
     
-    // Загрузка
     let progress = 0;
     const interval = setInterval(() => {
         progress += 10;
@@ -46,7 +46,6 @@ function update() {
     if(isPaused || isOver) return;
     player.dy += player.grav; player.y += player.dy;
     
-    // Камера
     if(player.y < canvas.height/2) {
         let d = canvas.height/2 - player.y; player.y = canvas.height/2;
         currentMeters += Math.floor(d/10);
@@ -54,7 +53,6 @@ function update() {
         bottleArray.forEach(b => b.y += d);
     }
 
-    // Физика
     if(player.dy > 0) {
         platforms.forEach(p => { if(player.x+30 > p.x && player.x < p.x+p.w && player.y+40 > p.y && player.y+40 < p.y+p.h+10) player.dy = player.jump; });
     }
@@ -66,8 +64,6 @@ function update() {
         if(currentMeters > highScore) highScore = currentMeters;
         document.getElementById('game-over').classList.remove('hidden'); 
         document.getElementById('final-steps').innerText = currentMeters;
-        // Автосохранение при падении
-        saveData();
     }
     
     document.getElementById('steps-counter').innerText = currentMeters + " м";
@@ -80,38 +76,37 @@ function animate() {
     if(isPaused || isOver) return;
     ctx.clearRect(0,0,canvas.width,canvas.height);
     update();
-    
     ctx.fillStyle = "#ff8c00"; platforms.forEach(p => ctx.fillRect(p.x, p.y, p.w, p.h));
     ctx.fillStyle = "#fff"; bottleArray.forEach(b => ctx.fillText("🍼", b.x, b.y+20));
-    ctx.fillStyle = "#ff8c00"; ctx.font = "900 45px Arial"; 
-    ctx.shadowBlur = 15; ctx.shadowColor = "#ff4500";
-    ctx.fillText("F", player.x, player.y+30);
-    ctx.shadowBlur = 0;
-
+    ctx.fillStyle = "#ff8c00"; ctx.font = "900 45px Arial"; ctx.fillText("F", player.x, player.y+30);
     requestAnimationFrame(animate);
 }
 
-// СОХРАНЕНИЕ ДАННЫХ
-const saveData = () => {
-    // ВАЖНО: Отправляем новые, накопленные данные
-    tg.sendData(JSON.stringify({
+// ФУНКЦИЯ СОХРАНЕНИЯ
+const saveDataAndClose = () => {
+    // ВАЖНО: Обновляем рекорд перед отправкой
+    if(currentMeters > highScore) highScore = currentMeters;
+    
+    const data = {
         action: "save",
         balance: balance,
         bottles: bottles,
         record: highScore
-    }));
+    };
+    tg.sendData(JSON.stringify(data));
+    // Не закрываем сразу, ждем отправки
+    setTimeout(() => tg.close(), 100);
 };
 
-const exitAndSave = () => { saveData(); setTimeout(() => tg.close(), 100); };
+// Привязываем кнопки выхода
+document.getElementById('pause-exit-btn').onclick = saveDataAndClose;
+document.getElementById('exit-btn').onclick = saveDataAndClose;
 
-// КНОПКИ
-document.getElementById('pause-exit-btn').onclick = exitAndSave;
-document.getElementById('exit-btn').onclick = exitAndSave; // Кнопка в меню проигрыша
 document.getElementById('resume-btn').onclick = () => { isPaused = false; document.getElementById('pause-modal').classList.add('hidden'); animate(); };
 document.getElementById('pause-btn').onclick = () => { isPaused = true; document.getElementById('pause-modal').classList.remove('hidden'); };
 document.getElementById('restart-btn').onclick = () => location.reload();
 
-// ВЫВОД СРЕДСТВ
+// Вывод средств
 document.getElementById('open-draw').onclick = () => document.getElementById('withdraw-modal').classList.remove('hidden');
 document.getElementById('close-draw').onclick = () => document.getElementById('withdraw-modal').classList.add('hidden');
 document.getElementById('confirm-draw').onclick = () => {
@@ -119,13 +114,9 @@ document.getElementById('confirm-draw').onclick = () => {
     if(a >= 150000 && a <= balance) {
         tg.sendData(JSON.stringify({action:"withdraw", char_name:n, amount:a}));
         setTimeout(() => tg.close(), 100);
-    } else tg.showAlert("Ошибка: минимум 150к или не хватает средств!");
+    } else tg.showAlert("Ошибка: минимум 150к!");
 };
 
-// ПОДДЕРЖКА
-document.getElementById('support-btn').onclick = () => {
-    // Замени на свой ник без @
-    tg.openTelegramLink("https://t.me/Dead_Hard11"); 
-};
+document.getElementById('support-btn').onclick = () => tg.openTelegramLink("https://t.me/твой_ник");
 
 init();
