@@ -171,6 +171,7 @@ document.getElementById('withdraw-btn').onclick = () => {
     }
 };
 
-document.getElementById('support-btn').onclick = () => tg.openTelegramLink("https://t.me/твой_ник");
+document.getElementById('support-btn').onclick = () => tg.openTelegramLink("https://t.me/Dead_Hard11");
 
 init();
+
