@@ -1,23 +1,28 @@
-body { margin: 0; background: #000; color: white; overflow: hidden; font-family: sans-serif; }
+body { margin: 0; background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%); overflow: hidden; font-family: sans-serif; color: white; }
+
+/* ЗВЕЗДЫ - ПАРАЛЛАКС */
+#stars, #stars2, #stars3 { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: -1; }
+#stars { width: 1px; height: 1px; background: transparent; box-shadow: 10vw 10vh #fff, 20vw 20vh #fff, 30vw 50vh #fff, 70vw 80vh #fff, 90vw 10vh #fff, 50vw 50vh #fff; animation: animStar 50s linear infinite; }
+#stars2 { width: 2px; height: 2px; background: transparent; box-shadow: 15vw 15vh #fff, 25vw 25vh #fff, 35vw 55vh #fff, 75vw 85vh #fff; animation: animStar 100s linear infinite; }
+#stars3 { width: 3px; height: 3px; background: transparent; box-shadow: 5vw 5vh #fff, 10vw 10vh #fff; animation: animStar 150s linear infinite; }
+
+@keyframes animStar { from { transform: translateY(0px); } to { transform: translateY(-2000px); } }
+
+/* Остальной интерфейс */
+.hidden { display: none !important; }
 #loader { position: fixed; inset: 0; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; }
 .f-logo-fire { font-size: 80px; color: #ff8c00; font-weight: 900; text-shadow: 0 0 20px #ff4500; animation: fire 0.3s infinite alternate; }
 @keyframes fire { from { transform: scale(1); opacity: 0.8; } to { transform: scale(1.1); opacity: 1; } }
 
-.progress-container { width: 200px; height: 6px; background: #222; border-radius: 3px; margin: 20px; overflow: hidden; }
+.progress-container { width: 200px; height: 6px; background: #222; border-radius: 3px; margin: 20px; }
 #progress-fill { width: 0%; height: 100%; background: #ff8c00; transition: width 0.1s; }
 
-#gameCanvas { display: block; background: radial-gradient(circle at center, #0a0a25 0%, #000 100%); }
-.hidden { display: none !important; }
 .btn-orange { background: #ff8c00; border: none; padding: 10px 20px; border-radius: 10px; color: #000; font-weight: bold; cursor: pointer; }
-
 .hud { position: absolute; top: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between; }
 .stats { background: rgba(0,0,0,0.7); padding: 8px; border-radius: 10px; border: 1px solid #ff8c00; font-size: 14px; }
-#steps-counter { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); font-weight: bold; color: #ff8c00; }
+#steps-counter { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); font-weight: bold; color: #ff8c00; text-shadow: 0 0 5px #000; }
 
 .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: flex; justify-content: center; align-items: center; z-index: 900; }
 .modal-content { background: #111; padding: 30px; border-radius: 20px; border: 2px solid #ff8c00; text-align: center; width: 80%; }
 .footer-btns { position: absolute; bottom: 20px; width: 100%; display: flex; justify-content: center; gap: 10px; }
 input { width: 90%; padding: 10px; margin: 10px 0; background: #222; color: white; border: 1px solid #ff8c00; border-radius: 5px; }
-
-/* Звезды */
-.star { position: absolute; background: white; border-radius: 50%; opacity: 0.5; pointer-events: none; }
