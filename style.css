@@ -1,75 +1,43 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
 
 body { 
-    margin: 0; 
-    background: #050505; 
-    color: #00ffcc; 
-    overflow: hidden; 
-    font-family: 'Orbitron', sans-serif; /* Брутальный шрифт */
-}
-
-/* Фон с сеткой */
-body::before {
-    content: ""; position: fixed; inset: 0;
-    background: 
-        linear-gradient(rgba(0, 255, 204, 0.1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 255, 204, 0.1) 1px, transparent 1px);
-    background-size: 50px 50px;
-    z-index: -2;
-    transform: perspective(500px) rotateX(60deg);
-    transform-origin: center bottom;
-}
-
-/* Загрузка */
-#loader { position: fixed; inset: 0; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; }
-.f-logo-brutal { 
-    font-size: 120px; color: #ff0055; 
-    text-shadow: 0 0 20px #ff0055, 0 0 40px #ff0055; 
-    animation: glitch 1s infinite;
-}
-@keyframes glitch { 
-    0% { transform: translate(0); } 
-    20% { transform: translate(-2px, 2px); } 
-    40% { transform: translate(-2px, -2px); } 
-    60% { transform: translate(2px, 2px); } 
-    80% { transform: translate(2px, -2px); } 
-    100% { transform: translate(0); } 
-}
-
-.progress-bar { width: 80%; height: 10px; background: #333; border: 1px solid #ff0055; margin-top: 30px; }
-#progress-fill { width: 0%; height: 100%; background: #ff0055; box-shadow: 0 0 10px #ff0055; }
-
-/* UI Игры */
-.hidden { display: none !important; }
-.btn-neon { 
-    background: black; border: 2px solid #00ffcc; 
-    padding: 12px 25px; color: #00ffcc; 
-    font-family: 'Orbitron', sans-serif; font-weight: bold; text-transform: uppercase;
-    box-shadow: 0 0 10px #00ffcc; cursor: pointer; transition: 0.2s;
-}
-.btn-neon:active { background: #00ffcc; color: black; }
-.btn-neon.red { border-color: #ff0055; color: #ff0055; box-shadow: 0 0 10px #ff0055; }
-.btn-neon.red:active { background: #ff0055; color: black; }
-
-.hud { 
-    position: absolute; top: 10px; left: 10px; right: 10px; 
-    display: flex; justify-content: space-between; align-items: center;
-    background: rgba(0,0,0,0.8); padding: 10px; border: 1px solid #00ffcc;
-}
-.stats div { margin-bottom: 5px; text-shadow: 0 0 5px #00ffcc; }
-
-/* Модальные окна */
-.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: flex; justify-content: center; align-items: center; z-index: 900; }
-.modal-content { 
-    background: #111; padding: 30px; width: 85%; text-align: center; 
-    border: 2px solid #ff0055; box-shadow: 0 0 30px rgba(255, 0, 85, 0.3); 
-}
-h1, h2 { color: #ff0055; text-transform: uppercase; letter-spacing: 2px; }
-
-input { 
-    width: 90%; padding: 12px; margin: 10px 0; 
-    background: #000; border: 1px solid #00ffcc; color: #00ffcc; 
+    margin: 0; background: #050505; color: #00ffcc; overflow: hidden; 
     font-family: 'Orbitron', sans-serif;
 }
 
-.footer-btns { position: absolute; bottom: 30px; width: 100%; display: flex; justify-content: center; gap: 20px; }
+/* Брутальный фон */
+body::before {
+    content: ""; position: fixed; inset: 0;
+    background: 
+        linear-gradient(rgba(0, 255, 204, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 204, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: -2;
+}
+
+#loader { position: fixed; inset: 0; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; }
+.f-logo-brutal { 
+    font-size: 120px; color: #ff0055; 
+    text-shadow: 0 0 20px #ff0055; 
+    animation: pulse 1s infinite;
+}
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+.progress-bar { width: 70%; height: 10px; background: #222; border: 1px solid #ff0055; margin-top: 30px; }
+#progress-fill { width: 0%; height: 100%; background: #ff0055; box-shadow: 0 0 10px #ff0055; }
+
+.hidden { display: none !important; }
+.btn-neon { 
+    background: #000; border: 2px solid #00ffcc; padding: 12px 20px; 
+    color: #00ffcc; font-family: 'Orbitron'; font-weight: bold; 
+    box-shadow: 0 0 10px rgba(0, 255, 204, 0.5); cursor: pointer;
+}
+.btn-neon.red { border-color: #ff0055; color: #ff0055; box-shadow: 0 0 10px rgba(255, 0, 85, 0.5); }
+
+.hud { position: absolute; top: 10px; left: 10px; right: 10px; background: rgba(0,0,0,0.8); padding: 10px; border: 1px solid #00ffcc; display: flex; justify-content: space-between; }
+.stats { font-size: 14px; }
+
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: flex; justify-content: center; align-items: center; z-index: 900; }
+.modal-content { background: #111; padding: 30px; border: 2px solid #ff0055; text-align: center; width: 85%; box-shadow: 0 0 20px rgba(255,0,85,0.2); }
+.footer-btns { position: absolute; bottom: 30px; width: 100%; display: flex; justify-content: center; gap: 15px; }
+input { width: 90%; padding: 10px; margin: 10px 0; background: #000; border: 1px solid #00ffcc; color: #fff; }
