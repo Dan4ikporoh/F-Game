@@ -1,17 +1,40 @@
 body { 
-    margin: 0; background: #050505; color: white; overflow: hidden;
-    background-image: 
-        radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
-        radial-gradient(white, rgba(255,255,255,.1) 1px, transparent 30px);
-    background-size: 550px 550px, 350px 350px;
-    font-family: sans-serif;
+    margin: 0; background: #000; color: white; overflow: hidden;
+    font-family: 'Arial Black', sans-serif;
 }
+
+/* Реалистичный космос (звезды на фоне) */
+body::before {
+    content: ""; position: fixed; inset: 0;
+    background: radial-gradient(circle at center, #0a0a2a 0%, #000 100%);
+    z-index: -2;
+}
+.stars {
+    position: absolute; width: 2px; height: 2px; background: white;
+    border-radius: 50%; opacity: 0.5; animation: moveStars 10s linear infinite;
+}
+@keyframes moveStars { from { transform: translateY(-100vh); } to { transform: translateY(100vh); } }
+
+/* Огненная F */
+.f-logo-fire {
+    font-size: 100px; color: #ff8c00; font-weight: 900;
+    filter: drop-shadow(0 0 10px #ff4500) drop-shadow(0 0 20px #ff0000);
+    animation: fireAnim 0.5s infinite alternate;
+}
+@keyframes fireAnim { from { text-shadow: 0 0 10px #ffae00, 0 -10px 20px #ff4500; } to { text-shadow: 0 0 20px #ffae00, 0 -20px 40px #ff0000; } }
+
+/* Ползунок загрузки */
+.progress-bar-container { width: 200px; height: 10px; background: #333; border-radius: 5px; margin: 20px 0; overflow: hidden; }
+.progress-fill { width: 0%; height: 100%; background: #ff8c00; animation: load 2s linear forwards; }
+@keyframes load { to { width: 100%; } }
+
 .hidden { display: none !important; }
-#loader { position: fixed; inset: 0; background: #000; display: flex; justify-content: center; align-items: center; z-index: 1000; }
-.f-logo { font-size: 100px; color: #ff8c00; text-shadow: 0 0 20px #ff8c00; }
-.btn-orange { background: #ff8c00; border: none; padding: 10px 20px; border-radius: 10px; color: #000; font-weight: bold; cursor: pointer; }
-.hud { position: absolute; top: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between; background: rgba(0,0,0,0.5); padding: 10px; border-radius: 10px; }
-.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center; z-index: 900; }
-.modal-content { background: #1a1a1a; padding: 30px; border-radius: 20px; border: 2px solid #ff8c00; text-align: center; width: 80%; }
+#loader { position: fixed; inset: 0; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; }
+.btn-orange { background: linear-gradient(#ffae00, #ff8c00); border: none; padding: 10px 20px; border-radius: 12px; color: #000; font-weight: 900; cursor: pointer; }
+.hud { position: absolute; top: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between; align-items: flex-start; }
+.stats { background: rgba(0,0,0,0.6); padding: 10px; border-radius: 10px; border: 1px solid #ff8c00; }
+#steps-counter { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); font-size: 20px; color: #ffae00; text-shadow: 0 0 5px #000; }
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: flex; justify-content: center; align-items: center; z-index: 900; }
+.modal-content { background: #111; padding: 30px; border-radius: 25px; border: 2px solid #ff8c00; text-align: center; width: 75%; }
 .footer-btns { position: absolute; bottom: 20px; width: 100%; display: flex; justify-content: center; gap: 10px; }
-input { width: 90%; padding: 10px; margin: 10px 0; background: #333; color: white; border: 1px solid #ff8c00; border-radius: 5px; }
+input { width: 90%; padding: 12px; margin: 10px 0; background: #222; color: white; border: 1px solid #ff8c00; border-radius: 8px; }
