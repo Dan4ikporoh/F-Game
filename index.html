@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>FRIDE Jump</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Экран загрузки -->
+    <div id="loader">
+        <div class="f-logo">F</div>
+        <div class="loader-text">Загрузка FRIDE...</div>
+    </div>
+
+    <!-- Игровой интерфейс -->
+    <div id="game-ui" class="hidden">
+        <canvas id="gameCanvas"></canvas>
+        <div class="hud">
+            <div class="score">🍼 <span id="bottles">0</span></div>
+            <div class="balance">💰 <span id="money">0</span> руб.</div>
+            <button id="pause-btn">⏸</button>
+        </div>
+    </div>
+
+    <!-- Меню проигрыша -->
+    <div id="game-over" class="modal hidden">
+        <div class="modal-content">
+            <h1>ИГРА ОКОНЧЕНА</h1>
+            <p>Собрано бутылок: <span id="final-bottles">0</span></p>
+            <button id="restart-btn">ИГРАТЬ СНОВА</button>
+            <button id="exit-btn">ВЫЙТИ В МЕНЮ</button>
+        </div>
+    </div>
+
+    <!-- Окно вывода -->
+    <div id="withdraw-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>ВЫВОД СРЕДСТВ</h2>
+            <p>Минимум: 150.000 руб (150 🍼)</p>
+            <input type="text" id="withdraw-name" placeholder="Ваше имя">
+            <button id="send-request">ОТПРАВИТЬ ЗАПРОС</button>
+            <button class="close-modal">ЗАКРЫТЬ</button>
+        </div>
+    </div>
+
+    <!-- Нижние кнопки -->
+    <div class="footer-btns">
+        <button id="withdraw-open">ВЫВОД</button>
+        <button id="support-btn">ПОДДЕРЖКА</button>
+    </div>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
