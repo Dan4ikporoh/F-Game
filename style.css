@@ -1,34 +1,75 @@
-body { margin: 0; background: #87CEEB; font-family: 'Comic Sans MS', cursive, sans-serif; overflow: hidden; }
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
 
-/* Мультяшное небо */
-.sun { position: absolute; top: 20px; right: 20px; width: 60px; height: 60px; background: yellow; border-radius: 50%; box-shadow: 0 0 20px orange; animation: spin 10s linear infinite; }
-.cloud { position: absolute; font-size: 50px; color: rgba(255,255,255,0.8); opacity: 0.8; }
-.c1 { top: 50px; left: 10%; animation: float 20s linear infinite; }
-.c2 { top: 120px; left: 70%; animation: float 25s linear infinite reverse; }
-@keyframes float { from { transform: translateX(-100px); } to { transform: translateX(100px); } }
+body { 
+    margin: 0; 
+    background: #050505; 
+    color: #00ffcc; 
+    overflow: hidden; 
+    font-family: 'Orbitron', sans-serif; /* Брутальный шрифт */
+}
 
-/* Загрузка со стикерами */
-#loader { position: fixed; inset: 0; background: #FFFacd; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; overflow: hidden; }
-.sticker-bg { position: absolute; font-size: 30px; animation: fall 3s linear infinite; opacity: 0.5; }
-@keyframes fall { from { transform: translateY(-100vh) rotate(0deg); } to { transform: translateY(100vh) rotate(360deg); } }
+/* Фон с сеткой */
+body::before {
+    content: ""; position: fixed; inset: 0;
+    background: 
+        linear-gradient(rgba(0, 255, 204, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 204, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: -2;
+    transform: perspective(500px) rotateX(60deg);
+    transform-origin: center bottom;
+}
 
-.f-logo-toon { font-size: 120px; color: #FF8C00; font-weight: 900; text-shadow: 3px 3px 0 #000; animation: bounce 1s infinite alternate; }
-@keyframes bounce { from { transform: scale(1); } to { transform: scale(1.1); } }
+/* Загрузка */
+#loader { position: fixed; inset: 0; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; }
+.f-logo-brutal { 
+    font-size: 120px; color: #ff0055; 
+    text-shadow: 0 0 20px #ff0055, 0 0 40px #ff0055; 
+    animation: glitch 1s infinite;
+}
+@keyframes glitch { 
+    0% { transform: translate(0); } 
+    20% { transform: translate(-2px, 2px); } 
+    40% { transform: translate(-2px, -2px); } 
+    60% { transform: translate(2px, 2px); } 
+    80% { transform: translate(2px, -2px); } 
+    100% { transform: translate(0); } 
+}
 
-.progress-bar { width: 250px; height: 15px; background: #eee; border: 2px solid #000; border-radius: 10px; margin-top: 20px; overflow: hidden; }
-#progress-fill { width: 0%; height: 100%; background: #32CD32; }
+.progress-bar { width: 80%; height: 10px; background: #333; border: 1px solid #ff0055; margin-top: 30px; }
+#progress-fill { width: 0%; height: 100%; background: #ff0055; box-shadow: 0 0 10px #ff0055; }
 
-/* UI */
+/* UI Игры */
 .hidden { display: none !important; }
-.btn-toon { background: #FFD700; border: 2px solid #000; padding: 10px 20px; border-radius: 15px; color: #000; font-weight: bold; cursor: pointer; box-shadow: 3px 3px 0 #000; transition: 0.1s; }
-.btn-toon:active { transform: translate(3px, 3px); box-shadow: 0 0 0; }
-.btn-toon.red { background: #FF6347; }
+.btn-neon { 
+    background: black; border: 2px solid #00ffcc; 
+    padding: 12px 25px; color: #00ffcc; 
+    font-family: 'Orbitron', sans-serif; font-weight: bold; text-transform: uppercase;
+    box-shadow: 0 0 10px #00ffcc; cursor: pointer; transition: 0.2s;
+}
+.btn-neon:active { background: #00ffcc; color: black; }
+.btn-neon.red { border-color: #ff0055; color: #ff0055; box-shadow: 0 0 10px #ff0055; }
+.btn-neon.red:active { background: #ff0055; color: black; }
 
-.hud { position: absolute; top: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between; z-index: 10; }
-.stats { background: rgba(255,255,255,0.8); padding: 10px; border-radius: 15px; border: 2px solid #000; color: #000; font-weight: bold; }
-#steps-counter { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); font-weight: bold; color: #000; font-size: 20px; }
+.hud { 
+    position: absolute; top: 10px; left: 10px; right: 10px; 
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(0,0,0,0.8); padding: 10px; border: 1px solid #00ffcc;
+}
+.stats div { margin-bottom: 5px; text-shadow: 0 0 5px #00ffcc; }
 
-.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 900; }
-.modal-content { background: #fff; padding: 30px; border-radius: 20px; border: 3px solid #000; text-align: center; width: 80%; box-shadow: 10px 10px 0 rgba(0,0,0,0.2); }
-.footer-btns { position: absolute; bottom: 20px; width: 100%; display: flex; justify-content: center; gap: 10px; }
-input { width: 90%; padding: 10px; margin: 10px 0; border: 2px solid #000; border-radius: 10px; }
+/* Модальные окна */
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: flex; justify-content: center; align-items: center; z-index: 900; }
+.modal-content { 
+    background: #111; padding: 30px; width: 85%; text-align: center; 
+    border: 2px solid #ff0055; box-shadow: 0 0 30px rgba(255, 0, 85, 0.3); 
+}
+h1, h2 { color: #ff0055; text-transform: uppercase; letter-spacing: 2px; }
+
+input { 
+    width: 90%; padding: 12px; margin: 10px 0; 
+    background: #000; border: 1px solid #00ffcc; color: #00ffcc; 
+    font-family: 'Orbitron', sans-serif;
+}
+
+.footer-btns { position: absolute; bottom: 30px; width: 100%; display: flex; justify-content: center; gap: 20px; }
