@@ -3,64 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>FRIDE Jump</title>
+    <title>FRIDE Jump Toon</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Фон космоса -->
-    <div id="stars"></div>
-    <div id="stars2"></div>
-    <div id="stars3"></div>
-
+    <!-- Экран загрузки -->
     <div id="loader">
-        <div class="f-logo-fire">F</div>
-        <div class="progress-container"><div id="progress-fill"></div></div>
-        <div class="loader-text">FRIDE ROLEPLAY</div>
+        <div id="stickers-bg"></div> <!-- Сюда будут падать стикеры -->
+        <div class="f-logo-toon">F</div>
+        <div class="progress-bar">
+            <div id="progress-fill"></div>
+        </div>
+        <div class="loader-text">ЗАГРУЗКА...</div>
     </div>
 
+    <!-- Игра -->
     <div id="game-ui" class="hidden">
         <canvas id="gameCanvas"></canvas>
+        <!-- Солнце и облака -->
+        <div class="sun"></div>
+        <div class="cloud c1">☁</div>
+        <div class="cloud c2">☁</div>
+
         <div class="hud">
             <div class="stats">
                 <div>🍼 <span id="bottles">0</span></div>
                 <div>💰 <span id="money">0</span></div>
-                <div style="color:#ffae00; font-size:10px">🏆 РЕКОРД: <span id="record">0</span>м</div>
+                <div style="color:#ffae00; font-size:10px">🏆 <span id="record">0</span>м</div>
             </div>
-            <button id="pause-btn" class="btn-orange">⏸</button>
+            <button id="pause-btn" class="btn-toon">II</button>
         </div>
         <div id="steps-counter">0 м</div>
     </div>
 
+    <!-- Модальные окна -->
     <div id="pause-modal" class="modal hidden">
         <div class="modal-content">
             <h1>ПАУЗА</h1>
-            <button id="resume-btn" class="btn-orange">ПРОДОЛЖИТЬ</button>
-            <button id="pause-exit-btn" class="btn-orange" style="background:#444">ВЫЙТИ И СОХРАНИТЬ</button>
+            <button id="resume-btn" class="btn-toon">ПРОДОЛЖИТЬ</button>
+            <button id="pause-exit-btn" class="btn-toon red">ВЫЙТИ И СОХРАНИТЬ</button>
         </div>
     </div>
 
     <div id="game-over" class="modal hidden">
         <div class="modal-content">
             <h1 style="color:#ff4444">УПАЛ!</h1>
-            <p>Счет: <span id="final-steps">0</span> м</p>
-            <button id="restart-btn" class="btn-orange">ЕЩЕ РАЗ</button>
-            <button id="exit-btn" class="btn-orange" style="background:#444">ВЫЙТИ И СОХРАНИТЬ</button>
+            <p>Высота: <span id="final-steps">0</span> м</p>
+            <button id="restart-btn" class="btn-toon">ЕЩЕ РАЗ</button>
+            <button id="exit-btn" class="btn-toon red">ВЫЙТИ И СОХРАНИТЬ</button>
         </div>
     </div>
 
     <div id="withdraw-modal" class="modal hidden">
         <div class="modal-content">
-            <h2 style="color:#ff8c00">ВЫВОД</h2>
+            <h2>ВЫВОД</h2>
             <input type="text" id="in-name" placeholder="Никнейм">
-            <input type="number" id="in-amount" placeholder="Сумма (мин 150к)">
-            <button id="confirm-draw" class="btn-orange">ОТПРАВИТЬ</button>
-            <button id="close-draw" class="btn-orange" style="background:#333">ОТМЕНА</button>
+            <input type="number" id="in-amount" placeholder="Сумма (от 150к)">
+            <button id="confirm-draw" class="btn-toon">ОТПРАВИТЬ</button>
+            <button id="close-draw" class="btn-toon red">ОТМЕНА</button>
         </div>
     </div>
 
+    <!-- Кнопки внизу -->
     <div class="footer-btns">
-        <button id="open-draw" class="btn-orange">ВЫВОД</button>
-        <button id="support-btn" class="btn-orange">ПОДДЕРЖКА</button>
+        <button id="open-draw" class="btn-toon">ВЫВОД</button>
+        <button id="support-btn" class="btn-toon">СВЯЗЬ</button>
     </div>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
